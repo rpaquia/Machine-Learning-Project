@@ -63,7 +63,3 @@ This project is licensed under the [License Name] License - see the [LICENSE.md]
 ## Acknowledgments
 
 We would like to express our gratitude to the creators of the datasets used in this research, as well as to our instructors and mentors who guided us throughout the project.
-
----
-
-Feel free to replace `[Your Name]` and `[Team Member X]` with the actual names of the project contributors. Also, replace `[License Name]` with the appropriate license you wish to use for your project, or provide additional information about the license if needed. This revised README.md should give your project a more professional and structured appearance.
