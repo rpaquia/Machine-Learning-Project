@@ -1,5 +1,3 @@
-Certainly, here's a more professional README.md for your CSE 151 project:
-
 # CSE 151 Project - Analyzing Movie Datasets
 
 ## Introduction
