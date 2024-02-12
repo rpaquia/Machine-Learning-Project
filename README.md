@@ -42,10 +42,6 @@ The project is organized into the following sections:
 
 7. **Future Work**: Suggestions for further research or improvements to the analysis.
 
-## Usage
-
-If you wish to replicate our analysis, you can follow the instructions in the project's code and Jupyter notebooks provided in this repository.
-
 ## Contributors
 
 - Arthur Andersen
