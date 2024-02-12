@@ -28,7 +28,7 @@ For the purpose of this research, we have employed a robust machine learning mod
 
 The project is organized into the following sections:
 
-1. **Data Collection and Preprocessing**: Details about how the datasets were obtained and prepared for analysis.
+1. **Data Collection and Preprocessing**: Details about how the datasets were obtained and prepared for analysis. In the preprocessing step, we clean the data by handling missing values, normalize numerical values to ensure uniform scales, and encode categorical variables as necessary. For the Kaggle Movies Dataset, we also adjust budget and revenue figures for inflation to enable accurate comparisons over time. Our Jupyter notebook, [Data Preprocessing and Exploration](https://github.com/arandersen/CSE_151_Project/blob/main/Project%20(2).ipynb), provides a detailed walkthrough of these steps.
 
 2. **Exploratory Data Analysis (EDA)**: Comprehensive exploration and visualization of the datasets to gain initial insights.
 
