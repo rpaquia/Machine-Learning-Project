@@ -26,6 +26,19 @@ For the purpose of this research, we have employed a robust machine learning mod
 
 
 ### Evaluate Your Model: Training vs. Test Error
+Training vs. Validation Accuracy graph: The accuracy graph shows that both the training and validation accuracies are very close to each other and remain relatively constant across epochs. This suggests that the model is neither overfitting nor underfitting, as there's no large gap between training and validation accuracy. The model seems to generalize well on the validation set.
+
+Training vs. Validation Loss graph: The loss graph shows a quick decrease in both training and validation loss, which then stabilizes at around epoch 10. The losses are very close to each other and do not diverge, indicating good generalization. There's no sign of overfitting since the validation loss does not increase as training progresses.
+
+Confusion Matrix: The confusion matrix shows that your model has a high number of true positives in one class (487), while it has not predicted any samples for the other two classes. This indicates a possible class imbalance or that the model has learned to predict predominantly the majority class.
+
+Accuracy: The accuracy about 91.2% which is a bit misleading in this context, as it seems the model has learned to predict the majority class very well but fails to recognize the other classes. This is a common issue in imbalanced datasets.
+
+Precision: The precision score is about 83.2%. This suggests that when the model predicts a class, it's correct about 83.2% of the time. However, this metric is weighted and might be influenced by the class imbalance.
+
+Recall: The recall is equal to the accuracy in this case (about 91.2%), which means the model is good at detecting the positives of the class it has learned to predict. However, it doesn't inform us about the model's ability to detect the other classes, which, according to the confusion matrix, is nonexistent.
+
+In conclusion, the model is likely suffering from a class imbalance issue, where it predicts the majority class well but fails to predict the minority classes. This is evidenced by the lack of true positives for two classes in the confusion matrix.
 
 #### Training and Testing Performance
 The initial performance of our neural network on the test set yielded a high accuracy of approximately 91.2%, with a mean squared error (MSE) of 0.0649. This indicates that the model is highly accurate in classifying the movies into the correct rating categories based on their budget and gross revenue. However, the confusion matrix reveals that the model primarily predicts the majority class, as shown by the significant number of true positives (487) for one class and zero true positives for the other two classes. This skew towards a single class suggests a high bias towards the most frequent rating category in the dataset.
