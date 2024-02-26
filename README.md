@@ -24,23 +24,7 @@ Through this multidimensional analysis, our research group endeavors to provide 
 
 For the purpose of this research, we have employed a robust machine learning model, the **Neural Network Model**, to aid in our analysis and predictions. This model enables us to make data-driven decisions and draw meaningful conclusions from the complex datasets under scrutiny.
 
-
-### Evaluate Your Model: Training vs. Test Error
-Model Accuracy graph: The accuracy for both training and validation shoots up sharply and reaches a high level after the first epoch. After the initial jump, the accuracy for both remains approximately constant. It's noteworthy that the validation accuracy is slightly higher than the training accuracy, which is unusual but not necessarily a problem if the variance is small. This could sometimes happen due to the specific samples in the validation set or regularization effects.
-
-Model Loss graph: The loss for both training and validation decreases sharply after the first epoch and continues to decrease gradually over subsequent epochs. The training and validation losses are very close to each other and converge towards a similar value, which indicates that the model is generalizing well without overfitting or underfitting. There's no sign of divergence, which is good.
-
-Confusion Matrix: The confusion matrix indicates that our model did not correctly predict any of the samples for the first two classes, but predicted all samples that belonged to the third class. The model correctly identified 487 samples of the third class, which indicates that it has a strong bias towards this class.
-
-MSE: The MSE is around 0.074, which might seem low, but MSE is not typically the best metric for classification problems, especially when dealing with categorical data.
-
-Accuracy: The accuracy which is about 91.2% which is a bit misleading in this context, as it seems the model has learned to predict the majority class very well but fails to recognize the other classes.
-
-Precision: The precision score is about 83.2%. This suggests that when the model predicts a class, it's correct about 83.2% of the time. However, this metric is weighted and might be influenced by the class imbalance.
-
-Recall: The recall is equal to the accuracy. This means that the model is very good at detecting the positives of the third class. However, for the first two classes, the recall is 0% because the model failed to identify any true positives for these classes.
-
-In conclusion, the model is likely suffering from a class imbalance issue, where it predicts the majority class well but fails to predict the minority classes. This is evidenced by the lack of true positives for the two classes in the confusion matrix.
+### Model Result
 
 #### Training and Testing Performance
 The initial performance of our neural network on the test set yielded a high accuracy of approximately 91.2%, with a mean squared error (MSE) of 0.0649. This indicates that the model is highly accurate in classifying the movies into the correct rating categories based on their budget and gross revenue. However, the confusion matrix reveals that the model primarily predicts the majority class, as shown by the significant number of true positives (487) for one class and zero true positives for the other two classes. This skew towards a single class suggests a high bias towards the most frequent rating category in the dataset.
@@ -56,11 +40,30 @@ Hyperparameter tuning identified the optimal configuration for the first hidden 
 #### Conclusion of Model
 The evaluation of the neural network model through training vs. test error analysis, cross-validation, and hyperparameter tuning provides a nuanced understanding of its performance. While the model demonstrates high accuracy, the reliance on the majority class for predictions raises questions about its ability to generalize across more evenly distributed classes. The cross-validation results affirm the model's robustness, though they also highlight the necessity of further adjustments to reduce variance and improve model generalizability.
 
-Future work should focus on addressing the imbalance in class predictions, possibly through techniques such as SMOTE for oversampling underrepresented classes or adjusting class weights. Additionally, exploring other models or ensemble methods might offer improvements in predictive performance and generalization. The findings from hyperparameter tuning have already laid the groundwork for more refined model iterations, suggesting that with continued optimization, the mo
+
+### Evaluate Your Model: Training vs. Test Error
+**Model Accuracy graph**: The accuracy for both training and validation shoots up sharply and reaches a high level after the first epoch. After the initial jump, the accuracy for both remains approximately constant. It's noteworthy that the validation accuracy is slightly higher than the training accuracy, which is unusual but not necessarily a problem if the variance is small. This could sometimes happen due to the specific samples in the validation set or regularization effects.
+
+**Model Loss graph**: The loss for both training and validation decreases sharply after the first epoch and continues to decrease gradually over subsequent epochs. The training and validation losses are very close to each other and converge towards a similar value, which indicates that the model is generalizing well without overfitting or underfitting. There's no sign of divergence, which is good.
+
+**Confusion Matrix**: The confusion matrix indicates that our model did not correctly predict any of the samples for the first two classes, but predicted all samples that belonged to the third class. The model correctly identified 487 samples of the third class, which indicates that it has a strong bias towards this class.
+
+**MSE**: The MSE is around 0.074, which might seem low, but MSE is not typically the best metric for classification problems, especially when dealing with categorical data.
+
+**Accuracy**: The accuracy which is about 91.2% which is a bit misleading in this context, as it seems the model has learned to predict the majority class very well but fails to recognize the other classes.
+
+**Precision**: The precision score is about 83.2%. This suggests that when the model predicts a class, it's correct about 83.2% of the time. However, this metric is weighted and might be influenced by the class imbalance.
+
+**Recall**: The recall is equal to the accuracy. This means that the model is very good at detecting the positives of the third class. However, for the first two classes, the recall is 0% because the model failed to identify any true positives for these classes.
+
+In conclusion, the model is likely suffering from a class imbalance issue, where it predicts the majority class well but fails to predict the minority classes. This is evidenced by the lack of true positives for the two classes in the confusion matrix.
 
 ### Fitting Graph Analysis
 
-We further examine where our model stands in the fitting graph, which illustrates the trade-off between bias and variance. Identifying our model's position helps in diagnosing overfitting or underfitting issues and guides us in selecting strategies for model improvement. This analysis can be found in the section of our Jupyter notebook.
+The model has a high accuracy on both the training and validation data, which would typically suggest a good fit. However, the confusion matrix reveals that the model has learned to predict only the majority class and fails to recognize any instances of the minority classes. This isn't the traditional notion of overfitting where the model memorizes the training data but rather a case where the model is biased and does not have the capability to generalize across all classes.
+The situation indicates that although the model's overall error rates (like accuracy) are low, it's actually failing to learn meaningful patterns across all classes due to class imbalance or perhaps a lack of representational capacity to differentiate between classes.
+
+In conclusion, your model's fit is superficially good but fundamentally poor due to its inability to classify more than one class. This is a form of overfitting to the majority class, which is often seen in cases of severe class imbalance.
 
 ### Next Model Considerations
 
@@ -90,7 +93,7 @@ The project is organized into the following sections:
 
 ### Conclusion of the 1st Model
 
-Our investigation with a neural network model has yielded significant insights into the elements affecting a film's box office performance. We have conducted thorough training, testing, and validation of the model, comparing test to training errors and using k-fold cross-validation to fully evaluate its performance. Although the model achieved good accuracy, there is still room for improvement, particularly in terms of its ability to generalize to new data due to its inclination to prefer the majority class and its unpredictability in performance across different data splits.
+Our model demonstrates high accuracy (approximately 91.2%) on the dataset used. However, the performance metrics and the confusion matrix suggest that this accuracy is primarily due to the model's ability to correctly identify one class while failing to recognize the others. The model has learned to predict the majority class almost exclusively, resulting in a high number of false negatives for the minority classes. This situation is indicative of a model that has not learned the distinguishing features of the minority classes. The training and validation loss graphs, as well as the accuracy graphs, indicate that the model's parameters are being optimized effectively. Nonetheless, the model's real-world utility is limited due to its lack of generalizability across different classes.
 
 ### Improvements
 
