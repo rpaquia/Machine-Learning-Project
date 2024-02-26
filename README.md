@@ -82,7 +82,7 @@ The project is organized into the following sections:
 
 3. **Feature Engineering**: The process of selecting and transforming relevant features for our analysis.
 
-4. **Machine Learning Model**: A detailed explanation of the Neural Network Model and how it is utilized in our research.
+4. **Machine Learning Model**: A detailed explanation of the Neural Network Model and how it is utilized in our research. [Machine Learning Model: Neural Network](https://github.com/arandersen/CSE_151_Project/blob/main/training_model.ipynb), provides a detailed walkthrough of these steps.
 
 5. **Results and Interpretation**: Presentation of our findings, analysis of results, and their implications.
 
