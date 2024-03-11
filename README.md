@@ -22,9 +22,32 @@ Through this multidimensional analysis, our research group endeavors to provide 
 
 ## Machine Learning Model
 
-For the purpose of this research, we have employed a robust machine learning model, the **Neural Network Model**, to aid in our analysis and predictions. This model enables us to make data-driven decisions and draw meaningful conclusions from the complex datasets under scrutiny.
+For the purpose of this research, we have employed a robust machine learning model, the **Polynomial Regression**, **Neural Network Model**, and **Decision Tree Classifier**  to aid in our analysis and predictions. This model enables us to make data-driven decisions and draw meaningful conclusions from the complex datasets under scrutiny.
 
-### Model Result
+### Model 1: Polynomial Regression
+
+### Evaluate our First Model Compare Training vs Test Error
+
+All three degrees 2, 3, and 4 are showing a good fit as seen by the testing MSE being lower than or very close to the training MSE. There is no evidence of overfitting, where we would expect the testing MSE to be significantly higher than the training MSE due to the model capturing noise in the training data.
+
+### Model Fit In The Fitting Graph
+
+Based on our MSE values, as the polynomial degree increases from 2 to 4, both training and testing MSEs decrease. This indicates that our model is capturing more of the data's underlying pattern with increased complexity, improving its performance. Our model with polynomial degree 4 have the lowest MSEs suggests an optimal balance between bias and variance, making it the best fit among the ones that we tested. There's no sign of overfitting as both training and testing error decreases together. In conclusion, our polynomial regression model with degree 4 provides the best balance of complexity and performance based on our data.
+
+### Next Model Considerations
+
+In light of the insights derived from the performance of our current neural network model, we are considering the exploration of two additional machine learning models to potentially enhance our predictive capabilities and address the identified limitations:
+
+- **Neural Network**: Neural networks are indeed well-suited to handle the complexity inherent in modeling the relationship between a movie's budget and its gross revenue, thanks to their ability to model nonlinear relationships and interactions between features without the need for manual feature engineering. Unlike polynomial regression, which requires choosing the degree of polynomials a priori and risks overfitting with higher degrees, neural networks can learn complex patterns through their hidden layers and neurons. They do this by adjusting weights and biases through backpropagation based on the error rate, allowing them to capture both high-level and subtle nuances in data. Moreover, neural networks can automatically discover the interaction between variables, making them a powerful tool for capturing the multifaceted dynamics of movie revenues. The flexibility and adaptability of neural networks, combined with techniques to prevent overfitting such as dropout and regularization, make them an attractive option for improving upon traditional regression models in predicting outcomes with complex, non-linear relationships.
+
+- **Decision Tree Classifier**: Despite the simplicity of decision trees, they are powerful for classification tasks and provide clear visualization of the decision-making process. A key advantage of using a Decision Tree Classifier is its interpretability; it allows for easy understanding of how decisions are made, which is invaluable for analyzing which features most significantly affect a movie's success. Furthermore, decision trees can handle non-linear data effectively and are less susceptible to outliers than regression models, making them a suitable choice for further exploration.
+
+These models were chosen with the intention of addressing specific challenges observed in our initial approach. Polynomial regression will allow us to test the hypothesis that a more nuanced modeling of relationships between variables could yield better predictive performance. On the other hand, the Decision Tree Classifier offers a different approach to classification, with the potential for higher accuracy.
+
+### Model 2: Neural Network Model 
+
+### Fitting Graph Analysis
+Based on our MSE values, as the polynomial degree increases from 2 to 4, both training and testing MSEs decrease. This indicates that our model is capturing more of the data's underlying pattern with increased complexity, improving its performance. Our model with polynomial degree 4 have the lowest MSEs suggests an optimal balance between bias and variance, making it the best fit among the ones that we tested. There's no sign of overfitting as both training and testing error decreases together. In conclusion, our polynomial regression model with degree 4 provides the best balance of complexity and performance based on our data.
 
 #### Training and Testing Performance
 The initial performance of our neural network on the test set yielded a high accuracy of approximately 91.2%, with a mean squared error (MSE) of 0.0649. This indicates that the model is highly accurate in classifying the movies into the correct rating categories based on their budget and gross revenue. However, the confusion matrix reveals that the model primarily predicts the majority class, as shown by the significant number of true positives (487) for one class and zero true positives for the other two classes. This skew towards a single class suggests a high bias towards the most frequent rating category in the dataset.
@@ -58,22 +81,38 @@ The evaluation of the neural network model through training vs. test error analy
 
 In conclusion, the model is likely suffering from a class imbalance issue, where it predicts the majority class well but fails to predict the minority classes. This is evidenced by the lack of true positives for the two classes in the confusion matrix.
 
-### Fitting Graph Analysis
+### Fitting Graph Analysis, How does it compare to your first model
 
-The model has a high accuracy on both the training and validation data, which would typically suggest a good fit. However, the confusion matrix reveals that the model has learned to predict only the majority class and fails to recognize any instances of the minority classes. This isn't the traditional notion of overfitting where the model memorizes the training data but rather a case where the model is biased and does not have the capability to generalize across all classes.
-The situation indicates that although the model's overall error rates (like accuracy) are low, it's actually failing to learn meaningful patterns across all classes due to class imbalance or perhaps a lack of representational capacity to differentiate between classes.
+The model has a high accuracy, precision and recall on both the training and validation data, which would suggest a good fit. This suggests that our second model performs well in predicting the "group ratings" based on the "Gross Revenue" and "Budget" of the movie and we can determine that "Gross Revenue" and "Budget" are good features in order to predict our target variable "group rating". 
 
-In conclusion, your model's fit is superficially good but fundamentally poor due to its inability to classify more than one class. This is a form of overfitting to the majority class, which is often seen in cases of severe class imbalance.
+The fitting graphs with MSE values for the polynomial regression indicate that the model's performance varies with the degree of the polynomial. As the degree increases, the model fits the training data better but could potentially overfit. While our second model shows high classification accuracy, the fitting graphs from our first model indicate the regression model's capability to predict a continuous outcome based on its input. They serve different purposes and thus, their performances are not directly comparable.
+
+In conclusion, for the specific task of classifying movies into 'group ratings', your second model seems to have found a good balance and performs well according to the classification metrics. For the task of predicting 'Gross Revenue' from 'Budget', the regression analysis of our first model indicates a variable fit depending on the polynomial degree, and its performance should be assessed by how well it generalizes to new, unseen data.
+
+### Did you perform hyper parameter tuning? K-fold Cross validation? Feature expansion? What were the results? 
+
+We performed, Hyper parameter tuning and K-fold Corss validation, but we didn't did any feature expansion as what we did was grouping scores. What we did with Grouping scores mean that We transformed the continuous 'Score' variable into a categorical 'group_rating' variable. This process is a form of feature engineering, where we're creating a new feature based on existing data.
+
+1. **K Fold Cross-Validation**
+- Cross-Validation: Applied Repeated K-Fold cross-validation to assess the model's performance across different subsets of the data, ensuring the model's effectiveness and generalization capability. This approach helps in evaluating the model's stability and reliability across different data splits.
+- Performance Metrics: The model's accuracy and mean squared error (MSE) were evaluated, providing insights into its classification performance and how close the predicted ratings are to the actual ratings, respectively.
+- **Results**: The K-fold cross-validation results indicate that the neural network model exhibits consistent performance across different subsets of the data, with accuracies ranging from approximately 86.9% to 91.4% across ten folds and an overall average accuracy of 89.7%. The mean squared error (MSE) values, averaging at 0.0516, suggest the model's predictions are reasonably close to the actual values. This demonstrates the model's robustness and generalizability, confirming its ability to perform well across diverse data segments without significant overfitting or underfitting to the training data.
+
+2. **Hyperparameter Tuning**
+- Hyperparameter Search: Employed a hyperparameter tuning process (using Keras Tuner) to find the optimal model architecture and learning rate, which are crucial for achieving the best possible model performance.
+- GridSearch: A GridSearch approach was selected, systematically exploring a range of predefined hyperparameter values to find the best combination, focusing on maximizing validation accuracy.
+- Optimization Results: The process identified the optimal number of units in each layer and the learning rate for the SGD optimizer, which were then used to build and evaluate the best model configuration.
+- **Results**: The hyperparameter tuning results reveal the identification of an optimal model configuration with 312 units in the first hidden layer and a learning rate of approximately 0.000202. This configuration resulted in a significant improvement in the model's performance during the initial training phases, showcasing high validation accuracies that indicate the model's capacity to make accurate predictions. The process of hyperparameter tuning has effectively pinpointed the most conducive parameters for maximizing the model’s accuracy, underlining the critical role of tuning in enhancing the predictive power and efficiency of machine learning models.
 
 ### Next Model Considerations
 
-In light of the insights derived from the performance of our current neural network model, we are considering the exploration of two additional machine learning models to potentially enhance our predictive capabilities and address the identified limitations:
+In light of the insights derived from the performance of our current neural network model, we are considering the exploration of two additional machine learning models to potentially enhance our predictive capabilities and address the identified limitations: 
 
-**Polynomial Regression**: This model is particularly appealing for its ability to capture the non-linear relationships between the features and the target variable, which is a common scenario in complex datasets like ours. Unlike linear regression, polynomial regression can model the intricate patterns observed in the budget, gross revenue, and their impact on a movie's rating category, potentially offering more accurate predictions by fitting a curved line through our data points.
+- **Decision Tree Classifier**: Despite the simplicity of decision trees, they are powerful for classification tasks and provide clear visualization of the decision-making process. A key advantage of using a Decision Tree Classifier is its interpretability; it allows for easy understanding of how decisions are made, which is invaluable for analyzing which features most significantly affect a movie's success. Furthermore, decision trees can handle non-linear data effectively and are less susceptible to outliers than regression models, making them a suitable choice for further exploration.
 
-**Decision Tree Classifier**: Despite the simplicity of decision trees, they are powerful for classification tasks and provide clear visualization of the decision-making process. A key advantage of using a Decision Tree Classifier is its interpretability; it allows for easy understanding of how decisions are made, which is invaluable for analyzing which features most significantly affect a movie's success. Furthermore, decision trees can handle non-linear data effectively and are less susceptible to outliers than regression models, making them a suitable choice for further exploration.
+The Decision Tree Classifier offers a different approach to classification, with the potential for high interpretability and the ability to capture non-linear patterns without the need for transformation.
 
-These models were chosen with the intention of addressing specific challenges observed in our initial approach. Polynomial regression will allow us to test the hypothesis that a more nuanced modeling of relationships between variables could yield better predictive performance. On the other hand, the Decision Tree Classifier offers a different approach to classification, with the potential for high interpretability and the ability to capture non-linear patterns without the need for transformation.
+### Model 3: Decision Tree Classifier
 
 ## Project Structure
 
@@ -85,7 +124,7 @@ The project is organized into the following sections:
 
 3. **Feature Engineering**: The process of selecting and transforming relevant features for our analysis.
 
-4. **Machine Learning Model**: A detailed explanation of the Neural Network Model and how it is utilized in our research. [Machine Learning Model: Neural Network](https://github.com/arandersen/CSE_151_Project/blob/main/training_model.ipynb), provides a detailed walkthrough of these steps.
+4. **Machine Learning Model**: A detailed explanation of the Neural Network Model and how it is utilized in our research. [Machine Learning Model: Polynomial Regression, Neural Network, Decision Tree Classifier](https://github.com/arandersen/CSE_151_Project/blob/main/training_model.ipynb), provides a detailed walkthrough of these steps.
 
 5. **Results and Interpretation**: Presentation of our findings, analysis of results, and their implications.
 
@@ -93,11 +132,41 @@ The project is organized into the following sections:
 
 ### Conclusion of the 1st Model
 
-Our model demonstrates high accuracy (approximately 91.2%) on the dataset used. However, the performance metrics and the confusion matrix suggest that this accuracy is primarily due to the model's ability to correctly identify one class while failing to recognize the others. The model has learned to predict the majority class almost exclusively, resulting in a high number of false negatives for the minority classes. This situation is indicative of a model that has not learned the distinguishing features of the minority classes. The training and validation loss graphs, as well as the accuracy graphs, indicate that the model's parameters are being optimized effectively. Nonetheless, the model's real-world utility is limited due to its lack of generalizability across different classes.
+The improvement in MSE as the degree of the polynomial increases suggests that the relationship between budget and gross revenue is complex and potentially non-linear, with higher-degree polynomials capturing this complexity more effectively. The consistent decrease in both training and testing errors indicates that the model is not yet suffering from overfitting at the fourth degree.
+
+However, it's important to note that while the improvements in MSE are consistent, they are also marginal, especially when moving from degree 3 to degree 4. This diminishing return suggests that there is a limit to how much more complexity (in terms of polynomial degree) can beneficially be added to the model without overfitting. The observation of diminishing returns as we increase the polynomial degree suggests a critical insight into the nature of modeling complex relationships, such as that between a movie's budget and its gross revenue. It emphasizes the inherent trade-offs in model development, especially between capturing the underlying data patterns (reducing bias) and maintaining a model's ability to generalize well to unseen data (avoiding overfitting).
+
+The fact that the model is not yet overfitting at the fourth degree is encouraging, indicating there's still some, albeit limited, scope for complexity increase without sacrificing model performance on new data. However, the marginal gains observed caution us against pursuing higher degrees of polynomial without careful consideration. It suggests that we are approaching, if not already at, the point of optimal complexity where the model is sufficiently complex to capture the relevant patterns in the data but not so complex that it becomes overly specialized to the training set.
+
+This situation underscores the importance of exploring alternative strategies for model improvement that do not solely rely on increasing model complexity through higher-degree polynomials. Techniques such as incorporating domain knowledge to engineer more relevant features, employing regularization methods to penalize unnecessary complexity, and exploring other forms of model validation like cross-validation to ensure that improvements are robust and generalizable, become paramount.
+
+Moreover, this context also highlights the potential utility of exploring other modeling approaches that might inherently balance complexity and generalizability better. Machine learning models, such as random forests, gradient boosting machines, or neural networks, offer sophisticated mechanisms to model non-linear relationships and interactions without manually specifying the form of the model. These models come with their mechanisms to control overfitting, such as depth limitations in trees or dropout in neural networks, potentially providing a more effective way to capture the complexities of the relationship between movie budgets and gross revenue while maintaining good performance on unseen data.
+
+### Conclusion of the 2nd Model
+
+The second model demonstrates good performance in terms of accuracy, precision, and recall on both the training and validation datasets. These metrics are indicative of a model that is correctly identifying the majority of instances across the classes it was trained to predict. The consistent high performance on unseen validation data suggests that the model has generalized well beyond the training dataset.
+
+However, it is important to consider the confusion matrix, which reveals that while the model excels at predicting a certain class, it may not be performing equally well across all classes. This could be a sign of class imbalance or that the model's predictive features such as 'Gross Revenue' and 'Budget' are particularly informative for one class but less so for others.
+
+In conclusion, the second model is a robust classifier for the 'group ratings' based on the 'Gross Revenue' and 'Budget' features. It presents a high degree of accuracy, precision, and recall, which are strong indicators of its reliability.
 
 ### Improvements
 
 To refine our approach and enhance the model's predictive accuracy and reliability, we propose several strategies:
+
+**Model 1 Improvement Suggestion**
+
+- **Regularization**: To prevent overfitting, especially when using higher-degree polynomials, consider applying regularization techniques such as Ridge or Lasso regression. These methods can help control the complexity of the model by penalizing large coefficients.
+
+- **Feature Engineering**: Besides polynomial features, explore other forms of feature engineering. For instance, interaction terms between budget and other variables might provide additional insights. Also, normalizing or scaling the features might help, especially when moving towards models that use regularization.
+
+- **Alternative Models**: Consider exploring non-linear models beyond polynomials, such as decision trees, random forests, or gradient boosting machines, which might capture the data's complexity in different ways.
+
+- **Hyperparameter Tuning**: Use grid search or random search to find the optimal combination of hyperparameters, such as the degree of the polynomial and regularization strength. This systematic approach can help in identifying the best model configuration.
+
+- **Non-Linear Transformations**: Before applying polynomial features, consider non-linear transformations on the input features, such as logarithmic, square root, or exponential transformations. These transformations can help in linearizing relationships between features and the target variable.
+
+**Model 2 Improvement Suggestion**
 
 - **Data Augmentation**: Expanding our dataset with more variables or by integrating additional datasets could provide a richer context for analysis, helping the model to uncover more nuanced relationships between features and outcomes.
 
