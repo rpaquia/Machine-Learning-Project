@@ -125,6 +125,26 @@ The Decision Tree Classifier offers a different approach to classification, with
 
 ### Model 3: Decision Tree Classifier
 
+#### Training and Testing Performance
+**Model Accuracy Graph**: Similar to the previous models, we want to see how the accuracy and training test react as we overfit by changing the hyperparameters of the decision tree. According to our graphs, our training accuracy increases as we increase the maximum depth of the decision tree while the testing accuracy decrease. These the training and testing data intersect when the maximum depth is around 6. As we increase the number of min splits, the training accuracy decreases while the testing accuracy initially decreases, but then increases. The highest accuracy is achieved when number of min split is 2. Lastly, as the number of min sample leaf increases, the training accuracy decreases while the testing accuracy increases. The testing and training data intersect at a value of 7.5 This might indicate that the decision tree performs well at a higher value of maximum depth and min sample leaf, and a lower value of min split.
+
+**Model Loss Graph**: The error/loss for our graph is simply loss = 1 - accuracy. As we increase the max depth of the decision tree, the testing loss increases while our training set decreases which intersects at around a maximum depth of 6.
+
+**Accuracy**: Our decision tree yielded an accuracy of 100% with our training set which indicates overfitting of the data. This is evident in the result of our testing set which yielded an accuracy of about 83%.
+
+**Precision**: Our decision tree yielded an precision of 100% with our training set which indicates overfitting of the data. This is evident in the result of our testing set which yielded an weighted precision of about 84%.
+
+**Recall**: Our decision tree yielded an recall of 100% with our training set which indicates overfitting of the data. This is evident in the result of our testing set which yielded an weighted recall of about 83%.
+
+#### Did you perform hyper parameter tuning? K-fold Cross validation? Feature expansion? What were the results?
+
+**1. Hyperparameter Tuning**
+- Hyperparameter tuning was conducted using GridSearchCV, focusing on the criterion, max depth, min samples split, and min samples leaf
+- The tuning was conducted with 5 cross validations and scored using accuracy
+- Based on our tuning, using Gini with a max depth of 1, min sample leaf of 1, and min sample split of 2 yielded the best accuracy
+- CV=5 mitigates the risk of overfitting and ensures the performance metrics not to be overly optimistic
+- Our testing accuracy increased from about 83% to 90%, indicating a 7% improvement from our base model
+
 ## Project Structure
 
 The project is organized into the following sections:
@@ -161,6 +181,14 @@ However, it is important to consider the confusion matrix, which reveals that wh
 
 In conclusion, the second model is a robust classifier for the 'group ratings' based on the 'Gross Revenue' and 'Budget' features. It presents a high degree of accuracy, precision, and recall, which are strong indicators of its reliability.
 
+### Conclusion of the 3rd Model
+
+The third model demonstrates strong performance across various evaluation metrics, including accuracy, precision, and recall, on both the training and testing datasets. These metrics suggest that the model effectively identifies the majority of instances across its predicted classes, indicating its proficiency in capturing underlying patterns within the data. Moreover, the model exhibits consistent high performance on the testing data, implying that it has successfully generalized beyond the constraints of the training dataset.
+
+However, a detailed examination of the confusion matrix reveals certain tendencies of the model to misclassify "mid" movies as "bad" and vice versa. Despite these occasional misclassifications, the model's overall performance remains robust. These insights underscore the importance of considering nuanced aspects of model performance beyond aggregate metrics, allowing for a more comprehensive evaluation of its predictive capabilities.
+
+In conclusion, the third model emerges as a reliable classifier for predicting 'group ratings' based on the 'Gross Revenue' and 'Budget' features. Its high degree of accuracy, precision, and recall are strong indicators of its reliability and effectiveness, making it a good model.
+
 ### Improvements
 
 To refine our approach and enhance the model's predictive accuracy and reliability, we propose several strategies:
@@ -188,6 +216,16 @@ To refine our approach and enhance the model's predictive accuracy and reliabili
 - **Ensemble Methods**: Considering ensemble techniques, such as bagging or boosting, to improve model stability and accuracy. These methods can aggregate predictions from multiple models to reduce variance and bias.
 
 - **Exploration of Alternative Models**: As previously mentioned, we plan to explore Polynomial Regression and Decision Tree Classifier models. These alternatives could offer new perspectives and methodologies for addressing the dataset's challenges, potentially overcoming limitations observed in the neural network model.
+
+**Model 3 Improvement Suggestion**
+
+- **Increase Cross-Validation Folds:** Increasing the number of folds in cross-validation can lead to a more reliable estimate of model performance. By using more folds, each instance in the dataset gets to be in the test set exactly once and in the training set K−1 times (where K is the number of folds), providing a more comprehensive evaluation of the model's performance across different subsets of the data.
+
+- **Expand the Parameter Grid:** Extending the range or adding new parameters to the param_grid can potentially lead to finding a better model. 
+
+- **Implement Randomized Search:** Instead of using GridSearchCV, we can use RandomizedSearchCV which samples a given number of candidates from the parameter space with a specified distribution. This approach can be more efficient than Grid Search and provide a good approximation of the best parameters with significantly less computational time.
+
+- **Feature Engineering and Selection:** We could create new features from existing ones through domain knowledge and select the most relevant features in the data. By doing so, we can implement feature importance scores for feature selection which can lead to a more effective and efficient model.
 
 ## Contributors
 
