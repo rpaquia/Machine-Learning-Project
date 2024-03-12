@@ -125,7 +125,7 @@ The Decision Tree Classifier offers a different approach to classification, with
 
 ### Model 3: Decision Tree Classifier
 
-#### Training and Testing Performance
+### Training and Testing Performance
 **Model Accuracy Graph**: Similar to the previous models, we want to see how the accuracy and training test react as we overfit by changing the hyperparameters of the decision tree. According to our graphs, our training accuracy increases as we increase the maximum depth of the decision tree while the testing accuracy decrease. These the training and testing data intersect when the maximum depth is around 6. As we increase the number of min splits, the training accuracy decreases while the testing accuracy initially decreases, but then increases. The highest accuracy is achieved when number of min split is 2. Lastly, as the number of min sample leaf increases, the training accuracy decreases while the testing accuracy increases. The testing and training data intersect at a value of 7.5 This might indicate that the decision tree performs well at a higher value of maximum depth and min sample leaf, and a lower value of min split.
 
 **Model Loss Graph**: The error/loss for our graph is simply loss = 1 - accuracy. As we increase the max depth of the decision tree, the testing loss increases while our training set decreases which intersects at around a maximum depth of 6.
@@ -136,7 +136,7 @@ The Decision Tree Classifier offers a different approach to classification, with
 
 **Recall**: Our decision tree yielded an recall of 100% with our training set which indicates overfitting of the data. This is evident in the result of our testing set which yielded an weighted recall of about 83%.
 
-#### Did you perform hyper parameter tuning? K-fold Cross validation? Feature expansion? What were the results?
+### Did you perform hyper parameter tuning? K-fold Cross validation? Feature expansion? What were the results?
 
 **1. Hyperparameter Tuning**
 - Hyperparameter tuning was conducted using GridSearchCV, focusing on the criterion, max depth, min samples split, and min samples leaf
