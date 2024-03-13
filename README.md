@@ -159,7 +159,88 @@ The project is organized into the following sections:
 
 5. **Results and Interpretation**: Presentation of our findings, analysis of results, and their implications.
 
-6. ## Conclusion and Future Directions
+### Data Exploration
+
+The dataset consists of 5,336 movies with data spanning from the year 1980 to 2020. The average movie score is approximately 6.4, with a standard deviation of 0.96, indicating a moderate level of variance in movie ratings. The financial aspect shows a substantial standard deviation in both budget and gross revenue, suggesting a wide disparity in movie budgets and earnings. Votes for movies have a wide range, indicating significant differences in popularity or viewership, with an average of around 114,229 votes. The distribution of 'Votes' is heavily right-skewed, meaning most movies receive relatively few votes, while a small number receive a vast majority, likely reflecting blockbuster hits. The distribution of 'Gross Revenue' is also right-skewed, with most movies earning relatively less and a few earning substantially more, which is typical of box office earnings. 
+
+The Q-Q plots for both gross revenue and budget before and after transformation show significant deviation from the line of normality at the tails, suggesting that the distribution of these financial variables is heavily skewed. This skewness indicates that while a few movies earn extremely high revenues and have large budgets, the majority do not. The histogram for the distribution of the budget shows a right-skewed distribution, reinforcing the Q-Q plot findings that most movies have a relatively low budget, with the frequency sharply decreasing as the budget increases. Bar charts displaying the mean score by rating and by genre provide insightful patterns about the average performance of movies within each category. Movies with different ratings and genres have distinct average scores, indicating that certain ratings and genres might be associated with higher or lower average movie scores.
+
+The correlation matrix reveals relationships between numerical variables such as the year of release, score, votes, budget, gross revenue, and runtime. Notable observations include a moderate positive correlation between gross revenue and votes, implying that more popular movies tend to earn higher revenues. There's also a weaker, yet significant, positive correlation between the budget and gross revenue, suggesting that higher budgets are somewhat associated with higher gross revenues.
+
+### Data Preprocessing
+
+The data preprocessing was used to refine the input for the neural network. We made a function called classify_score to segment movie scores into categorical bands, 'very bad' for scores up to 3, 'bad' for those up to 5, 'mid' for scores up to 8, and 'good' for any higher. This categorization was actualized by generating a new column, 'group_rating', applying the classification function to the existing 'score' data. The analysis then proceeded to isolate 'Budget' and 'Gross Revenue' as the feature set, positing these financial metrics as predictors, while 'group_rating' was established as the target variable, reflecting the categorized movie ratings.
+
+To accommodate the categorical nature of the target variable within a neural network's computational framework, one-hot encoding was employed, transforming 'group_rating' into a binary matrix essential for model interpretation. Concurrently, feature scaling was conducted through min-max normalization on the 'Budget' and 'Gross Revenue' variables, thereby enhancing the algorithm's convergence efficiency. Through these steps, the dataset was optimally preprocessed to support the subsequent neural network's learning and predictive accuracy.
+
+### Model 1: Polynomial Regression
+
+Our polynomial regression analysis involved assessing the relationship between movie budgets and gross revenue across polynomial degrees 2, 3, and 4. The results are encapsulated in the following figures:
+
+1. **Polynomial Degree 2**: The scatter plot with a second-degree polynomial fit reveals the basic quadratic relationship between the budget and gross revenue.
+2. **Polynomial Degree 3**: Increasing the polynomial degree to 3 showed a more flexible fit to the data, indicating a more complex relationship.
+3. **Polynomial Degree 4**: The fourth-degree polynomial regression provided the most nuanced fit among the tested models, suggesting a more detailed underlying pattern.
+
+#### Training vs. Test Error Evaluation
+
+- **Degree 2**: The evaluation of the second-degree polynomial model showed a mean squared error (MSE) of 0.51227 for training data and 0.48057 for testing data.
+- **Degree 3**: For the third-degree polynomial model, the training MSE was 0.49835 and the testing MSE was 0.46815, suggesting a better fit than the second degree.
+- **Degree 4**: The most complex model, with a fourth-degree polynomial, achieved a training MSE of 0.49328 and a testing MSE of 0.46525.
+
+#### Model Fit in the Fitting Graph
+
+The fitting graph analysis clearly showed that as the polynomial degree increases from 2 to 4, both training and testing MSEs decreased. This trend implies that our models are effectively capturing more of the complexity inherent in the data with each incremental degree. The fourth-degree polynomial regression, having the lowest MSEs, was deemed the best fit among the tested models. Importantly, there was no evidence of overfitting, as indicated by the parallel decrease of both training and testing errors. The fourth-degree polynomial model emerged as the optimal balance between complexity and performance based on the dataset.
+
+These findings suggest that higher-degree polynomial regression can effectively model the non-linear relationship between movie budgets and gross revenue. However, the careful selection of polynomial degree is crucial to avoid overfitting while still capturing the underlying data pattern with sufficient complexity. The results from our polynomial regression models inform our understanding of the financial dynamics in the movie industry, providing valuable insights into how budgetary decisions can influence a movie's commercial success.
+
+### Model 2: Neural Network
+
+#### Data Preprocessing
+Our neural network model's preprocessing involved creating a new target variable 'group_rating' derived from the 'Score' feature, which classifies movies into 'very bad,' 'bad,' 'mid,' and 'good' categories. We selected 'Budget' and 'Gross Revenue' as feature inputs, applied one-hot encoding to the target variable, and performed MinMax scaling on the inputs to normalize the data.
+
+#### Training and Testing Performance
+The neural network was trained and tested, revealing the following results:
+
+- Confusion Matrix indicated a strong bias towards one class, with the model correctly predicting all samples of the third class but none for the first two.
+- Accuracy was high at 91.2%, which should be interpreted cautiously due to the apparent class imbalance.
+- Mean Squared Error (MSE) stood at 0.0931, less indicative due to the classification nature of the problem.
+- Precision was recorded at 83.2%, suggesting the model was mostly correct when it made predictions, albeit likely skewed by class imbalance.
+- Recall matched the accuracy, again reflecting the bias towards the third class.
+
+#### K-Fold Cross-Validation
+K-Fold cross-validation demonstrated the model's consistent performance, with an overall average accuracy of approximately 89.7% and an average MSE of 0.0516, indicating robustness across different data segments. The variance in accuracy and MSE suggested some susceptibility to overfitting on particular subsets of the data.
+
+#### Hyperparameter Tuning
+Hyperparameter tuning identified an optimal configuration for the neural network model, indicating that 312 units for the first hidden layer and a learning rate of about 0.0002 are best suited for this analysis.
+
+#### Model Accuracy and Loss Over Epochs
+Training and validation accuracy graphs showed an initial surge followed by a plateau, with the validation accuracy peculiarly higher than training accuracy. Loss graphs for both sets decreased consistently over epochs, indicative of good generalization and no evidence of overfitting or underfitting.
+
+#### Analysis
+The model demonstrated high classification accuracy for the 'group ratings' based on 'Gross Revenue' and 'Budget'. However, the analysis indicates a potential class imbalance, as shown by the model's inability to predict the minority classes accurately.
+
+In conclusion, while the neural network model exhibits strong predictive accuracy, it is prone to bias toward the majority class, a challenge that future iterations of the model must address to improve class-specific predictive performance.
+
+### Model 3: Decision Tree Classifier
+
+#### Data Preprocessing
+Our decision tree preprocessing involved creating a new target variable 'group_rating' derived from the 'Score' feature, which classifies movies into 'very bad,' 'bad,' 'mid,' and 'good' categories, and applied one-hot encoding to the target variable. We selected 'Budget' and 'Gross Revenue' as feature inputs and performed MinMax scaling on the feature inputs to normalize the data.
+
+#### Training and Testing Performance
+The decision tree was trained and tested, revealing the following results:
+
+- Confusion Matrix indicated a tendency of the model to misclassify "mid" movies as "bad" and vice versa.
+- Accuracy was high at about 90%, which should be interpreted cautiously due to the apparent class imbalance.
+- Precision was recorded at about 84%, suggesting the model was mostly correct when it made predictions, albeit likely skewed by class imbalance.
+- Recall was recorded at about 83%, again reflecting the bias towards the "mid" and "bad" movies.
+
+#### Hyperparameter Tuning
+Hyperparameter tuning identified that using Gini with a max depth of 1, min sample leaf of 1, and min sample split of 2 yielded the best accuracy, increasing our testing accuracy from about 83% to 90%
+
+#### Analysis
+The model demonstrated high classification accuracy for the 'group ratings' based on 'Gross Revenue' and 'Budget'. However, the analysis indicates a potential class imbalance, as shown by the model tend to misclassify "mid" movies as "bad" and vice versa, which is a further issue to address to improve the predictive performance of the model.
+
+6. ## Conclusion and Future Directions of our model
 
 ### Conclusion of the 1st Model
 
@@ -226,6 +307,56 @@ To refine our approach and enhance the model's predictive accuracy and reliabili
 - **Implement Randomized Search:** Instead of using GridSearchCV, we can use RandomizedSearchCV which samples a given number of candidates from the parameter space with a specified distribution. This approach can be more efficient than Grid Search and provide a good approximation of the best parameters with significantly less computational time.
 
 - **Feature Engineering and Selection:** We could create new features from existing ones through domain knowledge and select the most relevant features in the data. By doing so, we can implement feature importance scores for feature selection which can lead to a more effective and efficient model.
+
+## Discussion
+
+Our exploration into the intricate world of cinema through the lens of data science has led us to some interesting findings. In this section, we delve deep into the interpretation, significance, and limitations of our results and approach framing them within the broader context of film analytics. This discussion is rooted in our initial objective: to unravel the complex relationship between movie budgets, box office performance, critical reception, and audience preferences.
+
+#### Data Preprocessing
+
+The creation of the `classify_score` method and the categorization of movies into 'very bad', 'bad', 'mid', and 'good' based on their scores was a critical step in our analysis. This preprocessing allowed us to transition from continuous to categorical analysis, facilitating our exploration into classification models. However, this simplification also introduces a potential limitation: the reduction of the rich variability found in movie ratings into broad categories might mask subtler trends and insights within the data. Furthermore, the reliance on 'Budget' and 'Gross Revenue' as the primary predictors overlooks other potentially influential factors, such as genre, directorial influence, and critical acclaim, which could provide a more nuanced understanding of movie success. But it is also notable to think about the fact that 'Budget' and 'Gross Revenue' had the highest correlation to group ratings and that the other features did not have any impactful correlation to group rating.
+
+#### Model 1: Polynomial Regression
+
+The polynomial regression analysis highlighted a non-linear relationship between movie budgets and gross revenue, with higher-degree polynomials capturing this complexity more effectively. This finding underscores the multifaceted nature of movie success, suggesting that simply increasing a movie's budget does not guarantee proportionate returns in revenue. However, the diminishing returns observed as we increased the polynomial degree to 4 raise questions about the practical limits of this model. This leads us to ponder the balance between model complexity and interpretability, and whether other variables not included in our model could better explain the variance in movie revenue.
+
+#### Model 2: Neural Network
+
+The neural network's high classification accuracy in predicting 'group ratings' from 'Budget' and 'Gross Revenue' is compelling, showcasing the model's ability to discern patterns within the data. Yet, the strong bias towards one class and the apparent class imbalance it revealed point to a significant challenge in modeling: ensuring that our model is accurate across all categories. This suggests the need for more sophisticated techniques to handle class imbalance, such as SMOTE or cost-sensitive learning. Moreover, the peculiar phenomenon of higher validation accuracy than training accuracy prompts us to question the distribution of our data splits and whether this could artificially inflate our model's perceived performance.
+
+#### Model 3: Decision Tree Classifier
+
+Our decision tree classifier, while providing high accuracy, precision, and recall, also exhibited a tendency to misclassify movies between 'mid' and 'bad' categories. And desipte having a slightly lower score for accuracy compared to the neural network model, it is notable that this model does not have bias towards one class. Furthermore, the decision tree model provided a more generalized performance across multiple classes, as opposed to the neural network's specialization in accurately predicting a single class. In scenarios where it's important to maintain balanced performance across various categories, the decision tree's ability to offer a more even classification might be preferred. Continuing on, the misclassification our decision tree model raises important considerations about the distinctiveness and overlap of these categories, as well as the decision tree's sensitivity to the nuances within the data. The improvement in testing accuracy following hyperparameter tuning is a proof to the effectiveness of these techniques. Yet, it also highlights the necessity of a careful and informed search for optimal model parameters to prevent overfitting and ensure generalizability. 
+
+#### General Discussion
+
+Across all models, the challenge of class imbalance emerged as a recurring theme, indicating a broader issue in machine learning applications to diverse datasets. This underscores the importance of employing balanced datasets or adjusting models to account for this imbalance. Furthermore, our results' believability hinges on the rigorousness of our preprocessing, model selection, and validation techniques. While we've made efforts to ensure accuracy and reliability, the inherent limitations of our dataset and chosen features invite caution in over-generalizing our findings.
+
+#### Limitations and Future Work
+
+Our analysis is not without its limitations. The decision to focus primarily on 'Budget' and 'Gross Revenue' as predictors may have oversimplified the complex factors influencing movie success. Future studies could enrich this analysis by incorporating additional variables, such as social media sentiment, critic reviews, or actor popularity. Additionally, exploring ensemble models or more advanced machine learning techniques could provide further insights and potentially more accurate predictions.
+
+## Conclusion
+
+Reflecting on our journey through the landscape of cinema analytics, it's clear that our exploration has opened more doors than it has closed. The fusion of data science and movie analytics not only highlights the potential for uncovering hidden patterns in the film industry but also underscores the complexities and challenges that come with it.
+
+Our decision to focus on 'Budget' and 'Gross Revenue' as primary predictors was driven by their apparent influence on a movie's commercial success. However, the journey revealed the nature relationship between these financial metrics and a movie's critical reception and audience preferences. The polynomial regression model provided valuable insights into the non-linear nature of this relationship, suggesting that movie success is not merely a matter of financial investment. Meanwhile, the neural network and decision tree models delved into classification, offering a lens through which to view the categorization of movies based on their success metrics.
+
+One reflection from our work is the critical role of data preprocessing and the choice of features in modeling. The simplification into categorical bands, while necessary for our analysis, may have masked subtler distinctions within the data. Future explorations could benefit from a more granular approach, possibly by incorporating a broader array of features that capture the multifaceted nature of movie success more comprehensively.
+
+Another key takeaway is the challenge posed by class imbalance, especially evident in the neural network model's results. This issue underscores the need for sophisticated methods to ensure balanced model performance across categories, highlighting an area for further methodological innovation.
+
+#### What Could Have Been Done Differently?
+
+Expanding our feature set to include qualitative aspects such as genre, directorial influence, or social media sentiment could have enriched our analysis, offering deeper insights into what drives a movie's success. Additionally, employing more advanced techniques to address class imbalance or exploring ensemble methods could have potentially enhanced the robustness and accuracy of our predictions. A different approach we could have explored further involves scrapping additional data from various sources, cleaning it, and matching it with our existing dataset. This approach would have allowed us to proceed with data that have matching records, potentially enriching our analysis with a wider array of variables and insights.
+
+#### Future Directions
+
+The path forward is rich with opportunities for deeper exploration. Integrating natural language processing to analyze movie reviews or leveraging social network analysis to understand the impact of celebrity networks on movie success are just a few avenues that could yield fascinating insights. Moreover, the application of cutting-edge machine learning techniques, such as deep learning or reinforcement learning, could offer new perspectives on predicting movie success.
+
+#### Final Thoughts
+
+Our project stands as a proof to the power and potential of applying data science to the arts and entertainment sector. While we've uncovered some patterns and relationships within the film industry, the complexity of the subject matter ensures that there is much more to explore. The intersection of cinema and data science remains a fertile ground for research, promising to enhance our understanding of cultural products and the factors that drive their success. As we close this chapter, we look forward to the next phase of discovery, confident that the future holds even more exciting insights at the nexus of film economics, critical success, and data analytics.
 
 ## Contributors
 
