@@ -1,4 +1,4 @@
-# CSE 151 Project - Cinematic Success Unveiled: A Data-Driven Analysis of the Film Industry
+# Project - Cinematic Success Unveiled: A Data-Driven Analysis of the Film Industry
 
 ## Introduction
 
